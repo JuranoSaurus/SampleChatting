@@ -8,15 +8,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.juranoaa.chatting.R;
-
 import com.juranoaa.chatting.common.Constants;
-import com.juranoaa.chatting.service.ChatService;
+import com.juranoaa.chatting.receiver.MainChatActivityMessageReceiver;
+import com.juranoaa.chatting.receiver.MainChatActivityMessageReceiver_;
+import com.juranoaa.chatting.service.ChatService_;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -30,7 +29,7 @@ public class MainChatActivity extends Activity {
 
     private static final String TAG = MainChatActivity.class.getSimpleName();
 
-    private MessageReceiver mReceiver = null;
+    private MainChatActivityMessageReceiver mReceiver = null;
 
     @ViewById(R.id.main_tv_chat_log)
     TextView tvChatLog; //cannot be private
@@ -83,7 +82,7 @@ public class MainChatActivity extends Activity {
 
     private void startChatService() {
         //start service
-        Intent intent = new Intent(this, ChatService.class);
+        Intent intent = new Intent(this, ChatService_.class);
         ComponentName componentName = startService(intent);
         if(componentName != null) {
             Log.v(TAG, "result of startService: " + componentName.toShortString());
@@ -98,12 +97,13 @@ public class MainChatActivity extends Activity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.Action.ACTION_TO_CLIENT_SEND_CHATMSG);
 
-        mReceiver = new MessageReceiver();
+        mReceiver = new MainChatActivityMessageReceiver_();
+        mReceiver.setParentActivity(this);
         registerReceiver(mReceiver, filter);
         Log.v(TAG, "registerReceiver()");
     }
 
-    private void addMsgToChatLog(String chatMsg, boolean senderIsMe) {
+    public void addMsgToChatLog(String chatMsg, boolean senderIsMe) {
         if(senderIsMe) {
             tvChatLog.append("\n" + myChatPrefix + chatMsg);
         } else {
@@ -111,20 +111,5 @@ public class MainChatActivity extends Activity {
         }
     }
 
-    private class MessageReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.v(TAG, "onReceive invoked!");
 
-            if (intent.getAction().equals(Constants.Action.ACTION_TO_CLIENT_SEND_CHATMSG)) {
-                Log.v(TAG, "ACTION_TO_CLIENT_SEND_CHATMSG received");
-                //received msg from service
-
-                String chatMsg = intent.getStringExtra(Constants.Action.ACTION_TO_CLIENT_SEND_CHATMSG);
-
-                addMsgToChatLog(chatMsg, false);
-
-            }
-        }
-    }
 }

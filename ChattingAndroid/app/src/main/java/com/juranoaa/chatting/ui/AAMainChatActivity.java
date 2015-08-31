@@ -25,7 +25,7 @@ import org.androidannotations.annotations.res.StringRes;
 @EActivity(R.layout.activity_main)
 public class AAMainChatActivity extends Activity {
 
-    private static final String TAG = com.juranoaa.chatting.ui.AAMainChatActivity.class.getSimpleName();
+    private static final String TAG = AAMainChatActivity.class.getSimpleName();
 
     @ViewById(R.id.main_tv_chat_log)
     TextView tvChatLog; //cannot be private

@@ -3,14 +3,15 @@ package com.juranoaa.chatting.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 
 import com.juranoaa.chatting.common.Constants;
-import com.juranoaa.chatting.receiver.ChatServiceMessageReceiver_;
+import com.juranoaa.chatting.rest.Message;
+import com.juranoaa.chatting.rest.RestProtocol;
 
 import org.androidannotations.annotations.EService;
+import org.androidannotations.annotations.Receiver;
 
 /**
  * Created by slhyv on 8/31/2015.
@@ -20,24 +21,29 @@ import org.androidannotations.annotations.EService;
 public class ChatService extends Service {
     private static final String TAG = ChatService.class.getSimpleName();
 
-    private ChatServiceMessageReceiver_ mReceiver = null;
     private Context mContext;
 
     @Override
     public void onCreate() {
         Log.i(TAG, "onCreate invoked!!!");
         mContext = this;
-        registerReceiverWithActions();
     }
 
-    private void registerReceiverWithActions() {
-        //register receiver with actions
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG);
+    @Receiver(actions = {Intent.ACTION_BOOT_COMPLETED, Intent.ACTION_USER_PRESENT })
+    void restartService(Intent intent) {
+        Log.v(TAG, "restartService() invoked!");
+        //wake up process. start service.
+        mContext.startService(new Intent(mContext, ChatService_.class));
+    }
 
-        mReceiver = new ChatServiceMessageReceiver_();
-        registerReceiver(mReceiver, filter);
-        Log.v(TAG, "registerReceiver()");
+    @Receiver(actions = Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG)
+    void requestToRestServerWithChatMsg(
+            @Receiver.Extra(Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG) String chatMsg) {
+        Log.v(TAG, "receive ACTION_TO_SERVICE_SEND_CHATMSG");
+        Log.d(TAG, "received msg from client: " + chatMsg);
+
+        //msg from client. send msg to server.
+        new RestProtocol(mContext).execute(new Message("Tae", chatMsg));
     }
 
     @Override
@@ -59,15 +65,4 @@ public class ChatService extends Service {
         return null;
     }
 
-    @Override
-    public void onDestroy() {
-        Log.i(TAG, "onDestroy invoked");
-
-        if (mReceiver != null) {
-            unregisterReceiver(mReceiver);
-            Log.i(TAG, "unregisterReceiver() called");
-            mReceiver = null; //explicit null
-        }
-        super.onDestroy();
-    }
 }

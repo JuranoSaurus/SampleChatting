@@ -29,16 +29,6 @@
         <service android:name=".service.ChatService_" >
         </service>
 
-        <receiver
-            android:name=".service.ChatWaker"
-            android:enabled="true"
-            android:exported="false"
-            android:label="ChatWaker" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".rest.RestTestActivity"
             android:label="@string/app_name">

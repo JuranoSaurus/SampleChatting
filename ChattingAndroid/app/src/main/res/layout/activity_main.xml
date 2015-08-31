@@ -13,13 +13,13 @@
         android:orientation="horizontal"
         >
         <EditText
-            android:id="@+id/main_et_chatmsg_to_send"
+            android:id="@+id/main_et_chat_msg_to_send"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.8"/>
 
         <Button
-            android:id="@+id/main_btn_send_chatmsg"
+            android:id="@+id/main_btn_send_chat_msg"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2"
@@ -29,7 +29,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/main_chat_log"
+        android:id="@+id/main_tv_chat_log"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:maxLines = "100000000"

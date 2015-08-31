@@ -18,18 +18,24 @@ import com.juranoaa.chatting.R;
 import com.juranoaa.chatting.common.Constants;
 import com.juranoaa.chatting.service.ChatService;
 
+import org.androidannotations.annotations.Click;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
 /**
  * Created by slhyvaa on 2015-08-31.
  */
+@EActivity(R.layout.activity_main)
 public class MainChatActivity extends Activity {
 
     private static final String TAG = MainChatActivity.class.getSimpleName();
 
     private MessageReceiver mReceiver = null;
 
-    private TextView mTvChatLog;
-    private EditText etChatMsgToSend;
-    private Button btnSendChatMsg;
+    @ViewById(R.id.main_tv_chat_log)
+    TextView tvChatLog; //cannot be private
+    @ViewById(R.id.main_et_chat_msg_to_send)
+    EditText etChatMsgToSend;
 
     private String myChatPrefix;
     private String serverChatPrefix;
@@ -37,10 +43,8 @@ public class MainChatActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         setChatPrefix();
-        initUiComponents();
         startChatService();
         registerReceiverWithActions();
     }
@@ -50,40 +54,31 @@ public class MainChatActivity extends Activity {
         serverChatPrefix = getResources().getString(R.string.sender_server) + ": ";
     }
 
-    private void initUiComponents() {
-        mTvChatLog = (TextView) findViewById(R.id.main_chat_log);
+    @Click(R.id.main_btn_send_chat_msg)
+    void onClickBtnSendChatMsg() {
+        Log.v(TAG, "btnSendChatMsg clicked");
 
-        etChatMsgToSend = (EditText) findViewById(R.id.main_et_chatmsg_to_send);
+        String chatMsg = etChatMsgToSend.getText().toString();
 
-        btnSendChatMsg = (Button) findViewById(R.id.main_btn_send_chatmsg);
-        btnSendChatMsg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.v(TAG, "btnSendChatMsg clicked");
+        //not send empty msg
+        if(chatMsg.equals("")) {
+            Log.i(TAG, "empty msg. cancel request.");
+            return;
+        }
 
-                String chatMsg = etChatMsgToSend.getText().toString();
+        //log chatmsg to chatlog
+        addMsgToChatLog(chatMsg, true);
 
-                //not send empty msg
-                if(chatMsg.equals("")) {
-                    Log.i(TAG, "empty msg. cancel request.");
-                    return;
-                }
+        //clear edittext
+        etChatMsgToSend.setText("");
 
-                //log chatmsg to chatlog
-                addMsgToChatLog(chatMsg, true);
-
-                //clear edittext
-                etChatMsgToSend.setText("");
-
-                //send broadcast with msg to service
-                Intent sendMsgIntent = new Intent(Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG);
-                sendMsgIntent.putExtra(
-                        Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG,
-                        chatMsg
-                );
-                sendBroadcast(sendMsgIntent);
-            }
-        });
+        //send broadcast with msg to service
+        Intent sendMsgIntent = new Intent(Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG);
+        sendMsgIntent.putExtra(
+                Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG,
+                chatMsg
+        );
+        sendBroadcast(sendMsgIntent);
     }
 
     private void startChatService() {
@@ -110,9 +105,9 @@ public class MainChatActivity extends Activity {
 
     private void addMsgToChatLog(String chatMsg, boolean senderIsMe) {
         if(senderIsMe) {
-            mTvChatLog.append("\n" + myChatPrefix + chatMsg);
+            tvChatLog.append("\n" + myChatPrefix + chatMsg);
         } else {
-            mTvChatLog.append("\n" + serverChatPrefix + chatMsg);
+            tvChatLog.append("\n" + serverChatPrefix + chatMsg);
         }
     }
 

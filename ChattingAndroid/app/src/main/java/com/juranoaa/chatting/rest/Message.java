@@ -1,6 +1,5 @@
 package com.juranoaa.chatting.rest;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

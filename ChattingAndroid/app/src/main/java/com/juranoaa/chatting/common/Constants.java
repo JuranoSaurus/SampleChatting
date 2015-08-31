@@ -7,8 +7,6 @@ public class Constants {
 
     public abstract class Package {
         public static final String PACKAGE_NAME = "com.juranoaa.chatting";
-        public static final String PUSH_PACKAGE_NAME = PACKAGE_NAME + ".service";
-        public static final String PUSH_SERVICE_NAME = PUSH_PACKAGE_NAME + ".ChatService";
     }
 
     /** naming rule: PACKAGE_NAME + ".action_to_where_operation" */
@@ -17,6 +15,11 @@ public class Constants {
                 = Package.PACKAGE_NAME + ".action_to_service_send_chatmsg";
         public static final String ACTION_TO_CLIENT_SEND_CHATMSG
                 = Package.PACKAGE_NAME + ".action_to_client_send_chatmsg";
+    }
+
+    public abstract  class Host {
+        public static final String CONTEXT_PATH = "http://www.nornenjs.com/chat";
+        public static final String SEND_URL = "/send";
     }
 
 

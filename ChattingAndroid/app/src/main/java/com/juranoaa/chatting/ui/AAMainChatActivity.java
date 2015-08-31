@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.juranoaa.chatting.R;
 import com.juranoaa.chatting.common.Constants;
-import com.juranoaa.chatting.service.ChatService_;
+import com.juranoaa.chatting.service.AAChatService_;
+
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -22,9 +23,9 @@ import org.androidannotations.annotations.res.StringRes;
  * Created by slhyvaa on 2015-08-31.
  */
 @EActivity(R.layout.activity_main)
-public class MainChatActivity extends Activity {
+public class AAMainChatActivity extends Activity {
 
-    private static final String TAG = MainChatActivity.class.getSimpleName();
+    private static final String TAG = com.juranoaa.chatting.ui.AAMainChatActivity.class.getSimpleName();
 
     @ViewById(R.id.main_tv_chat_log)
     TextView tvChatLog; //cannot be private
@@ -72,7 +73,7 @@ public class MainChatActivity extends Activity {
 
     private void startChatService() {
         //start service
-        Intent intent = new Intent(this, ChatService_.class);
+        Intent intent = new Intent(this, AAChatService_.class);
         ComponentName componentName = startService(intent);
         if(componentName != null) {
             Log.v(TAG, "result of startService: " + componentName.toShortString());

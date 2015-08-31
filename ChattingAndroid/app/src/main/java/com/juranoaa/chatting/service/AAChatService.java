@@ -7,21 +7,26 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.juranoaa.chatting.common.Constants;
+import com.juranoaa.chatting.rest.AARestProtocol;
 import com.juranoaa.chatting.rest.Message;
-import com.juranoaa.chatting.rest.RestProtocol;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EService;
 import org.androidannotations.annotations.Receiver;
+import org.androidannotations.annotations.rest.RestService;
 
 /**
  * Created by slhyv on 8/31/2015.
  * The Service Managing All Communications
  */
 @EService
-public class ChatService extends Service {
-    private static final String TAG = ChatService.class.getSimpleName();
+public class AAChatService extends Service {
+    private static final String TAG = com.juranoaa.chatting.service.AAChatService.class.getSimpleName();
 
     private Context mContext;
+
+    @RestService
+    AARestProtocol aaRestProtocol;
 
     @Override
     public void onCreate() {
@@ -33,7 +38,7 @@ public class ChatService extends Service {
     void restartService(Intent intent) {
         Log.v(TAG, "restartService() invoked!");
         //wake up process. start service.
-        mContext.startService(new Intent(mContext, ChatService_.class));
+        mContext.startService(new Intent(mContext, AAChatService_.class));
     }
 
     @Receiver(actions = Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG)
@@ -43,7 +48,17 @@ public class ChatService extends Service {
         Log.d(TAG, "received msg from client: " + chatMsg);
 
         //msg from client. send msg to server.
-        new RestProtocol(mContext).execute(new Message("Tae", chatMsg));
+        background_send(chatMsg);
+    }
+
+
+    @Background
+    void background_send(String chatMsg) {
+        Message message = aaRestProtocol.echoProtocol(new Message("Tae", chatMsg));
+        Intent intent = new Intent(Constants.Action.ACTION_TO_CLIENT_SEND_CHATMSG);
+        intent.putExtra(Constants.Action.ACTION_TO_CLIENT_SEND_CHATMSG, message.getData());
+        sendBroadcast(intent);
+        Log.d(TAG, "msg send: " + message.getData());
     }
 
     @Override

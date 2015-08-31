@@ -79,10 +79,11 @@ public class ChatService extends Service {
 
             } else if(intent.getAction().equals(Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG)) {
                 Log.v(TAG, "receive ACTION_TO_SERVICE_SEND_CHATMSG");
-                //msg from client. send msg to server.
-
                 String chatMsg = intent.getStringExtra(Constants.Action.ACTION_TO_SERVICE_SEND_CHATMSG);
-                Log.d(TAG, "received msg: " + chatMsg);
+                Log.d(TAG, "received msg from client: " + chatMsg);
+
+                //msg from client. send msg to server.
+                //TODO: DO SERVER REQUEST HERE!
 
             }
         }

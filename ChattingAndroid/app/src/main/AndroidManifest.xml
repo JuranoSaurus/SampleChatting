@@ -14,7 +14,7 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
 
-        <!--<activity
+        <activity
             android:name=".ui.MainChatActivity"
             android:label="@string/app_name"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
@@ -37,10 +37,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>-->
+        </receiver>
 
 
-        <activity
+        <!--<activity
             android:name=".rest.AARestTestActivity_"
             android:label="@string/app_name">
             <intent-filter>
@@ -48,7 +48,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity>-->
 
     </application>
 

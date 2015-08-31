@@ -29,11 +29,6 @@
         <service android:name=".service.ChatService_" >
         </service>
 
-        <activity
-            android:name=".rest.RestTestActivity"
-            android:label="@string/app_name">
-        </activity>
-
     </application>
 
 </manifest>

@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.oilMap.server">
+	<logger name="com.juranoaa.chatting">
 		<level value="debug" />
 	</logger>
 	

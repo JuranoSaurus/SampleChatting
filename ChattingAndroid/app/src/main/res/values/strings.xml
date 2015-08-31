@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Chatting</string>
+    <string name="app_name">JuranoChatting</string>
+    <string name="sender_me">ME</string>
+    <string name="sender_server">JURANO</string>
 </resources>

@@ -2,4 +2,5 @@
     <string name="app_name">JuranoChatting</string>
     <string name="sender_me">ME</string>
     <string name="sender_server">JURANO</string>
+    <string name="host">http://www.nornenjs.com/chat</string>
 </resources>

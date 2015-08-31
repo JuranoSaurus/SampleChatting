@@ -22,6 +22,12 @@ def AAVersion = '3.3.2' // change this to your desired version, for example the 
 dependencies {
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
+    compile files('libs/jackson-annotations-2.5.0.jar')
+    compile files('libs/jackson-core-2.5.0.jar')
+    compile files('libs/jackson-databind-2.5.0.jar')
+    compile files('libs/spring-android-auth-2.0.0.M2.jar')
+    compile files('libs/spring-android-core-2.0.0.M2.jar')
+    compile files('libs/spring-android-rest-template-2.0.0.M2.jar')
 }
 
 apt {
@@ -33,9 +39,9 @@ apt {
         resourcePackageName "com.juranoaa.chatting"
 
         // You can set optional annotation processing options here, like these commented options:
-    logLevel 'INFO'
-    logFile '/var/log/aa.log'
-}
+        logLevel 'INFO'
+        logFile '/var/log/aa.log'
+    }
 }
 
 android {
@@ -48,5 +54,12 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
     }
 }

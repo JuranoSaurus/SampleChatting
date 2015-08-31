@@ -21,6 +21,4 @@ public class Constants {
         public static final String CONTEXT_PATH = "http://www.nornenjs.com/chat";
         public static final String SEND_URL = "/send";
     }
-
-
 }

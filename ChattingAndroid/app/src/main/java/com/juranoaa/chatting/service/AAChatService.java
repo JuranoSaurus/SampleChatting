@@ -21,7 +21,7 @@ import org.androidannotations.annotations.rest.RestService;
  */
 @EService
 public class AAChatService extends Service {
-    private static final String TAG = com.juranoaa.chatting.service.AAChatService.class.getSimpleName();
+    private static final String TAG = AAChatService.class.getSimpleName();
 
     private Context mContext;
 
@@ -50,7 +50,6 @@ public class AAChatService extends Service {
         //msg from client. send msg to server.
         background_send(chatMsg);
     }
-
 
     @Background
     void background_send(String chatMsg) {

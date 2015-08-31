@@ -1,6 +1,5 @@
 package com.juranoaa.chatting.rest;
 
-
 import com.juranoaa.chatting.common.Constants;
 
 import org.androidannotations.annotations.rest.Post;

@@ -6,16 +6,10 @@ import java.util.Map;
  * Created by SungGeun on 2015-08-31.
  */
 public class Message {
-
     private String name;
-
     private String data;
-
     private Map<String, Object> map;
-
-    public Message() {
-
-    }
+    public Message() { }
 
     public Message(String name, String data) {
         this.name = name;

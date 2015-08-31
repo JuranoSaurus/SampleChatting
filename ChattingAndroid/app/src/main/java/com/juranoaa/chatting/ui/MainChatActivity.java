@@ -20,6 +20,7 @@ import com.juranoaa.chatting.service.ChatService_;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.StringRes;
 
 /**
  * Created by slhyvaa on 2015-08-31.
@@ -36,21 +37,17 @@ public class MainChatActivity extends Activity {
     @ViewById(R.id.main_et_chat_msg_to_send)
     EditText etChatMsgToSend;
 
-    private String myChatPrefix;
-    private String serverChatPrefix;
+    @StringRes(R.string.sender_me)
+    String myChatPrefix;
+    @StringRes(R.string.sender_server)
+    String serverChatPrefix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setChatPrefix();
         startChatService();
         registerReceiverWithActions();
-    }
-
-    private void setChatPrefix() {
-        myChatPrefix = getResources().getString(R.string.sender_me) + ": ";
-        serverChatPrefix = getResources().getString(R.string.sender_server) + ": ";
     }
 
     @Click(R.id.main_btn_send_chat_msg)
@@ -91,7 +88,7 @@ public class MainChatActivity extends Activity {
             //TODO: exit app
         }
     }
-
+    
     private void registerReceiverWithActions() {
         //register receiver with actions
         IntentFilter filter = new IntentFilter();
@@ -105,9 +102,9 @@ public class MainChatActivity extends Activity {
 
     public void addMsgToChatLog(String chatMsg, boolean senderIsMe) {
         if(senderIsMe) {
-            tvChatLog.append("\n" + myChatPrefix + chatMsg);
+            tvChatLog.append("\n" + myChatPrefix + ": " + chatMsg);
         } else {
-            tvChatLog.append("\n" + serverChatPrefix + chatMsg);
+            tvChatLog.append("\n" + serverChatPrefix + ": " + chatMsg);
         }
     }
 

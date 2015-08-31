@@ -9,6 +9,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 import com.juranoaa.chatting.common.Constants;
+import com.juranoaa.chatting.rest.Message;
+import com.juranoaa.chatting.rest.RestProtocol;
 
 /**
  * Created by slhyv on 8/31/2015.
@@ -84,7 +86,7 @@ public class ChatService extends Service {
 
                 //msg from client. send msg to server.
                 //TODO: DO SERVER REQUEST HERE!
-
+                new RestProtocol(getApplicationContext()).execute(new Message("Tae", chatMsg));
             }
         }
     }

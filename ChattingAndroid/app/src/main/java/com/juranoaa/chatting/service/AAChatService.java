@@ -13,7 +13,7 @@ import com.juranoaa.chatting.rest.Message;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EService;
 import org.androidannotations.annotations.Receiver;
-import org.androidannotations.annotations.rest.RestService;
+import org.androidannotations.rest.spring.annotations.RestService;
 
 /**
  * Created by slhyv on 8/31/2015.

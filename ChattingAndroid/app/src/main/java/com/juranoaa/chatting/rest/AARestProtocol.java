@@ -2,8 +2,8 @@ package com.juranoaa.chatting.rest;
 
 import com.juranoaa.chatting.common.Constants;
 
-import org.androidannotations.annotations.rest.Post;
-import org.androidannotations.annotations.rest.Rest;
+import org.androidannotations.rest.spring.annotations.Post;
+import org.androidannotations.rest.spring.annotations.Rest;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
 /**
